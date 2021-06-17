@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="Stylesheet" href="./index.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">BLINDIND LIGHTS</h2>
+            <h3 id="artist">The Weeknd</h3>
+            <div class="img_container">
+                <img src="./images/shubham1.jpg" alt="">
+            </div>
+            <audio src="./songs/shubham1.mp3"></audio>
+            <div class="music_controls">
+                <i class="fas fa-backward" id="prev" title="Previous"></i>
+                <i class="fas fa-play main_button" id="play" title="Play"></i>
+                <i class="fas fa-forward" id="next" title="Next"></i>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    const play=document.getElementById("play");
+    const music=document.querySelector('audio');
+    const img=document.querySelector('img');
+    const next=document.getElementById('next');
+    const prev=document.getElementById('prev');
+    const Title=document.getElementById('title');
+    const Artist=document.getElementById('artist');
+    
+    const songs=[{
+        name : 'shubham1',
+        title: 'BLINDING LIGHTS',
+        artist : 'THE WEEKND'
+    },{
+        name : 'shubham2',
+        title: 'PREY FOR ME',
+        artist : 'THE WEEKND'
+    },{
+        name : 'shubham3',
+        title: 'DESPASCITO',
+        artist : 'JUSTIN BIEBER'
+    }
+];
+
+
+// PLAY MUSIC    
+const PlayMusic =()=> {
+    IsPlay=false;
+    music.play();
+    play.classList.replace('fa-play','fa-pause');
+    img.classList.add('anime');
+}
+
+// PAUSE MUSIC
+const PauseMusic=() => {
+    IsPlay=true;
+    music.pause();
+    play.classList.replace('fa-pause','fa-play');
+    img.classList.remove('anime');
+}
+
+let IsPlay=true;
+    play.addEventListener('click',()=>{
+        if(IsPlay){
+            PlayMusic();
+        }else{
+            PauseMusic();
+        }
+    });
+
+    //MUSIC DATA CHANGE
+    const loadSongs =(songs) => {
+        Title.textContent=songs.title;
+        Artist.textContent=songs.artist;
+        music.src=`songs/${songs.name}.mp3`;
+        img.src=`images/${songs.name}.jpg`;
+    }
+
+    let songIndex=0
+    //NEXT SONGS
+    const nextSongs =()=> {
+        songIndex=(songIndex+1) % songs.length;
+        loadSongs(songs[songIndex]);
+        PlayMusic();
+    }
+    next.addEventListener('click',nextSongs);
+
+    
+    //PREVIOUS SONGS
+    const prevSongs =()=> {
+        songIndex=(songIndex -1 + songs.length) % songs.length;
+        loadSongs(songs[songIndex]);
+        PlayMusic();
+    }
+    prev.addEventListener('click',prevSongs);
+
+    </script>
+</body>
+</html>
